@@ -1,11 +1,12 @@
 #include <stdio.h>
-#include <MPI.h>
+#include <mpi.h>
 
-main (int argx, char* argv[]) {
+main (int argc, char* argv[]) {
 
-	int procID, nproc, myID, myLeft, myRight, root, target, tag, source;
+	int procID, nproc, myId, myLeft, myRight, root, target, tag, source;
 	myId = myLeft = myRight = root = target = 0;
 	char string[20];
+	MPI_Status status;
 
 	// Initialize MPI
      MPI_Init(&argc, &argv);
@@ -25,10 +26,12 @@ main (int argx, char* argv[]) {
 tag = procID;
 
      if (procID == root) {
-	target++;
-	MPI_Send(&procID, 1, MPI_INT, target, tag, MPI_COMM_WORLD);
-     } else {
-	     	MPI_Recv(&myLeft, 1, MPI_INT, ANY, tag, MPI_COMM_WORLD);
+	target = 1;
+	MPI_Send(&procID, 0, MPI_INT, target, tag, MPI_COMM_WORLD);
+     }
+     else
+     {
+	     	MPI_Recv(&myLeft, 1, MPI_INT,MPI_ANY_SOURCE, tag, MPI_COMM_WORLD, &status);
 	printf("I'm %d and %d just said hi to me!", procID, myLeft);	
 	//MPI_Recv Blocking
 	//MPI_Send
