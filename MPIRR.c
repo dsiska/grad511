@@ -54,7 +54,7 @@ printf("Processor %d right of neighbor %d\n", myid, myid_left);
 myid_left = myid - 1;
 
 if (myid_left == -1) { 
-	myid_left = 24; 
+	myid_left = mysize-1; 
 	}
 
 //initialize myid_right - assigned by MPI Recv
