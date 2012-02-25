@@ -29,8 +29,8 @@ tag = procID;
 	target = 1;
 	MPI_Send(&procID, 0, MPI_INT, target, tag, MPI_COMM_WORLD);
      }
-     else
-     {
+     
+     if (procID != root) {
 	     	MPI_Recv(&myLeft, 1, MPI_INT,MPI_ANY_SOURCE, tag, MPI_COMM_WORLD, &status);
 	printf("I'm %d and %d just said hi to me!", procID, myLeft);	
 	//MPI_Recv Blocking
