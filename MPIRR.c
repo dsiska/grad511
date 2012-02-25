@@ -21,7 +21,7 @@ MPI_Comm_size(MPI_COMM_WORLD, &mysize); /*Get no. of processors*/
 
 /*compute myid_right and myid_left */
 
-/*
+
 
    myid_right = myid + 1;
 
@@ -29,22 +29,15 @@ if (myid_right >= mysize) {
 	myid_right = 0; 
 	}
 
-myid_left = 0;
+//myid_left = 0;
 
 ierr = MPI_Isend(&myid, 1, MPI_INTEGER, myid_right, 0, MPI_COMM_WORLD, &ireq);
 
-*/
-
 /* blocking receive from left neighbor */
-
-/*
 
 ierr = MPI_Recv(&myid_left,1,MPI_INTEGER,MPI_ANY_SOURCE,0,MPI_COMM_WORLD, &istat);
 
 printf("Processor %d right of neighbor %d\n", myid, myid_left);
- */
-
-
 
 //modify this to also send all off these messages back - i.e. to the left neighbor processor.
 //printf("Processor %d of %d: Hello World!\n", myid, mysize);
