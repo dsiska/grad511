@@ -31,15 +31,15 @@ tag = procID;
 	target = 1;
 	ierr = MPI_Isend(&procID, 0, MPI_INT, target, tag, MPI_COMM_WORLD, &ireq);
      }
-     
-     if (procID != root) {
-	     	MPI_Recv(&myLeft, 1, MPI_INT,MPI_ANY_SOURCE, tag, MPI_COMM_WORLD, &status);
-	
-	ierr = MPI_Recv(&myLeft, 1, MPI_INT, MPI_ANY_SOURCE, tag, MPI_COMM_WORLD, &status);
+     else
+     {
+	MPI_Recv(&myLeft, 1, MPI_INT,MPI_ANY_SOURCE, tag, MPI_COMM_WORLD, &status);	
+	//ierr = MPI_Recv(&myLeft, 1, MPI_INT, MPI_ANY_SOURCE, tag, MPI_COMM_WORLD, &status);
 	printf("I'm %d and %d just said hi to me!", procID, myLeft);	
 	
 	//MPI_Recv Blocking
 	//MPI_Send
 	//to nproc-1
      }
+ierr = MPI_Finalize();
 }
