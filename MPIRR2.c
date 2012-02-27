@@ -2,9 +2,9 @@
 #include <mpi.h>
 
 main (int argc, char* argv[]) {
-printf("Please work?");
 
-	int procID, nproc, myId, myLeft, myRight, root, target, tag, source, ierr;
+
+	int procID, nproc, myId, myLeft, myRight, root, target, tag, source, ierr, i;
 	myId = myLeft = myRight = root = target = 0;
 	char string[20];
 	MPI_Status status;
@@ -25,17 +25,18 @@ printf("Please work?");
 // 1 send int - oh well int, I am procID!
 // 0 receive int
 // 0 print - well golly it sure is nice to meet you int!
-tag = procID;
+tag = 1;
 
      if (procID == root) {
-	target = 1;
-	ierr = MPI_Isend(&procID, 0, MPI_INT, target, tag, MPI_COMM_WORLD, &ireq);
+	printf("Root process initiating introductions");
+	for (i=0; i < nproc; i++)
+	ierr = MPI_Send(&procID, 0, MPI_INT, i, tag, MPI_COMM_WORLD);
      }
      else
      {
-	MPI_Recv(&myLeft, 1, MPI_INT,MPI_ANY_SOURCE, tag, MPI_COMM_WORLD, &status);	
+	MPI_Recv(&myLeft, 1, MPI_INT,MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status);	
 	//ierr = MPI_Recv(&myLeft, 1, MPI_INT, MPI_ANY_SOURCE, tag, MPI_COMM_WORLD, &status);
-	printf("I'm %d and %d just said hi to me!", procID, myLeft);	
+	printf("I'm %d and %d just said hi to me!\n", procID, myLeft);	
 	
 	//MPI_Recv Blocking
 	//MPI_Send
